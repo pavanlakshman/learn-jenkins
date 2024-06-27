@@ -4,7 +4,7 @@ pipeline {
     }
     options {
         // Timeout counter starts AFTER agent is allocated
-        timeout(time: 15, unit: 'SECONDS')
+        timeout(time: 15, unit: 'MINUTES')
         disableConcurrentBuilds()
     }
      parameters {
@@ -23,7 +23,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
-                //sh 'sleep 10'
+                sh 'sleep 10'
             }
         }
         stage('Deploy') {
