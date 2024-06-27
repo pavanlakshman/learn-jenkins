@@ -30,6 +30,7 @@ pipeline {
             steps {
                 echo 'Deploying....'
             }
+        }
         stage('Print Params') {
             steps {
                 echo "Hello ${params.PERSON}"
@@ -39,6 +40,5 @@ pipeline {
                 echo "Password: ${params.PASSWORD}"
             }
         }
-    }
         }
-    }
+}
