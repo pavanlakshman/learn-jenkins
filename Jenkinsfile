@@ -3,11 +3,10 @@ pipeline {
         label 'AGENT-1'
     }
     options {
-        // Timeout counter starts AFTER agent is allocated
-        timeout(time: 15, unit: 'MINUTES')
+        timeout(time: 30, unit: 'MINUTES')
         disableConcurrentBuilds()
     }
-     parameters {
+    parameters {
         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
         text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
         booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
@@ -15,34 +14,47 @@ pipeline {
         password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
     }
     environment{
-        PROJECT = 'DEV'
+        DEPLOY_TO =  'production'
+        GREETING = 'Good Morning'
     }
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
+                sh 'echo This is build'
+                sh 'env'
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing..'
-                sh 'sleep 10'
+                sh 'echo This is Test'
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
+                sh 'echo This is Deploy'
             }
         }
-        stage('Print Params') {
-            steps {
+        stage("print params"){
+            steps{
                 echo "Hello ${params.PERSON}"
                 echo "Biography: ${params.BIOGRAPHY}"
                 echo "Toggle: ${params.TOGGLE}"
                 echo "Choice: ${params.CHOICE}"
                 echo "Password: ${params.PASSWORD}"
                 echo "triggered test again"
+                error 'some failure'
             }
         }
+    }
+    post { 
+        always { 
+            echo 'I will always say Hello again!'
         }
+        success { 
+            echo 'I will run when pipeline is success'
+        }
+        failure { 
+            echo 'I will run when pipeline is failure'
+        }
+    }
 }
