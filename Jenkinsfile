@@ -15,17 +15,17 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh echo 'This is for build'
+                sh 'echo This is for build'
             }
         }
         stage('Test') {
             steps {
-                sh echo 'This is for test'
+                sh 'echo This is for test'
             }
         }
         stage('Deploy') {
             steps {
-                sh echo 'This is for deploy'
+                sh 'echo This is for deploy'
             }
         }
     }
